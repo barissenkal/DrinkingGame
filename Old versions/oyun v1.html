@@ -1,0 +1,60 @@
+<html>
+<head>
+</head>
+<body>
+<div id="thetext" style="font-size:80px;"></div>
+<button style="font-size:40px;" onClick="zarAt();">Zar at</button>
+
+<br>
+<br>
+Ace choose someone and drink as a partner<br>
+2 you<br>
+3 me<br>
+4 everybody<br>
+5 boys<br>
+6 girls<br>
+7 I have never<br>
+8 hands on the table, last one drinks<br>
+9 true false guessing<br>
+10 (assign a rule, who doesn't follow drinks twice)<br>
+J card owner starts drinking and others follow one by one. First person stops, others follow. <br>
+Q game keeps going, who answers a question drinks<br>
+K pass card
+
+</body>
+<script type="text/javascript">
+	function zarAt () {
+		var number = Math.floor((Math.random() * 13) + 1);
+
+		if(number == 13){
+			setText("Ace");
+		}
+		if(number>1 && number<11){
+			setText(number);
+		}
+		if(number == 11){
+			setText("J");
+		}
+		if(number == 12){
+			setText("Q");
+		}
+		if(number == 13){
+			setText("K");
+		}
+
+		// switch(number) {
+		//     case 1:
+		//         setText("Ace");
+		//         break;
+		//     case n:
+		//         code block
+		//         break;
+		//     default:
+		//         default code block
+		// }
+	}
+	function setText(text){
+		document.getElementById("thetext").innerHTML = text;
+	}
+</script>
+</html>

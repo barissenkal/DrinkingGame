@@ -1,0 +1,248 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card Game</title>
+<style type="text/css">
+body {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	text-align: center;
+	/*background-color: rgb(45, 87, 0);*/
+}
+#maincontainer{
+	margin: 0 auto;
+	padding: 20px;
+	max-width: 300px;
+}
+#thetext {
+	margin: 0 auto;
+	height: 160px;
+	width: 140px;
+	padding-top: 20px;
+
+	font-size:100px;
+
+	background-color: rgba(240, 240, 240, 0.9);
+	box-shadow: 1px 2px rgba(18, 18, 18, 0.2);
+
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+
+	/*position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);*/
+}
+#zarbutton {
+	font-size:32px;
+	height: 40px;
+	margin: 12px auto;
+}
+#smalltext{
+	color: #fdfdfd;
+}
+</style>
+</head>
+<body>
+<div id="maincontainer">
+	<div id="thetext">?</div>
+	<button id="zarbutton" onClick="zarAt();">Zar at</button>
+
+	<div id="smalltext"></div>
+
+</div>
+</body>
+<script type="text/javascript">
+var log = true;
+function smartlog(logme){
+  //because IE :@
+  if (log && window.console && window.console.log ) {
+    //"smartlog: " +
+    console.log( logme );
+  }
+}
+
+var newdeck = [
+	{num:1, type:1},
+	{num:2, type:1},
+	{num:3, type:1},
+	{num:4, type:1},
+	{num:5, type:1},
+	{num:6, type:1},
+	{num:7, type:1},
+	{num:8, type:1},
+	{num:9, type:1},
+	{num:10, type:1},
+	{num:11, type:1},
+	{num:12, type:1},
+	{num:13, type:1},
+	{num:1, type:2},
+	{num:2, type:2},
+	{num:3, type:2},
+	{num:4, type:2},
+	{num:5, type:2},
+	{num:6, type:2},
+	{num:7, type:2},
+	{num:8, type:2},
+	{num:9, type:2},
+	{num:10, type:2},
+	{num:11, type:2},
+	{num:12, type:2},
+	{num:13, type:2},
+	{num:1, type:3},
+	{num:2, type:3},
+	{num:3, type:3},
+	{num:4, type:3},
+	{num:5, type:3},
+	{num:6, type:3},
+	{num:7, type:3},
+	{num:8, type:3},
+	{num:9, type:3},
+	{num:10, type:3},
+	{num:11, type:3},
+	{num:12, type:3},
+	{num:13, type:3},
+	{num:1, type:4},
+	{num:2, type:4},
+	{num:3, type:4},
+	{num:4, type:4},
+	{num:5, type:4},
+	{num:6, type:4},
+	{num:7, type:4},
+	{num:8, type:4},
+	{num:9, type:4},
+	{num:10, type:4},
+	{num:11, type:4},
+	{num:12, type:4},
+	{num:13, type:4}
+];
+var thedeck = [];
+var left = 0;
+var lastcard = {num:0, type:0};
+
+function zarAt(){
+	document.getElementById("zarbutton").disabled = true;
+	smartlog("zarAt: pressed");
+
+	if(left == 0){
+		smartlog("zarAt: new deck");
+		thedeck = shuffle(newdeck);
+		left = newdeck.length -1;
+
+		animateShuffle(thedeck[left]);
+	} else {
+		left--;
+		//TODO
+		setCard(thedeck[left]);
+		document.getElementById("zarbutton").disabled = false;
+	}
+}
+
+function animateShuffle (card) {
+	document.getElementById("smalltext").innerHTML = " ";
+	document.getElementById("thetext").innerHTML = ".";
+	setTimeout(function(){
+		document.getElementById("thetext").innerHTML = "..";
+	}, 200);
+	setTimeout(function(){
+		document.getElementById("thetext").innerHTML = "...";
+	}, 400);
+	setTimeout(function(){
+		setCard(card);
+		document.getElementById("zarbutton").disabled = false;
+	}, 600);
+}
+
+function setCard (card) {
+	smartlog("setCard() card: num=" + card.num + " type=" + card.type);
+	switch(card.num) {
+	    case 1:
+	        setText("A","Choose someone and drink as partners");
+	        break;
+	    case 2:
+	        setText("2","You");
+	        break;
+	    case 3:
+	        setText("3","Me");
+	        break;
+	    case 4:
+	        setText("4","Everybody");
+	        break;
+	    case 5:
+	        setText("5","Boys");
+	        break;
+	    case 6:
+	        setText("6","Girls");
+	        break;
+	    case 7:
+	        setText("7","I have never");
+	        break;
+	    case 8:
+	        setText("8","Hands on the table");
+	        break;
+	    case 9:
+	        setText("9","true false guessing");
+	        break;
+	    case 10:
+	        setText("10","Drinking rule");
+	        break;
+	    case 11:
+	        setText("J","I start drinking, others follow.");
+	        break;
+	    case 12:
+	        setText("Q","Question Master");
+	        break;
+	    case 13:
+	        setText("K","Earned 1 pass");
+	        break;
+	    default:
+	        setText("Error","error");
+	        break;
+	}
+
+	//setType(card.type);
+
+}
+function setText(text,small){
+	document.getElementById("thetext").innerHTML = text;
+	document.getElementById("smalltext").innerHTML = small;
+}
+function setType(type){
+	switch(type) {
+	    case 1:
+	        //lesbian threesome
+	        break;
+	    case 2:
+	        //dimond
+	        break;
+	    case 3:
+	        //heart
+	        break;
+	    case 4:
+	        //anal
+	        break;
+	    default:
+	        
+	        break;
+	}
+}
+function shuffle(array) {
+	var m = array.length, t, i;
+
+	// While there remain elements to shuffle…
+	while (m) {
+
+	// Pick a remaining element…
+	i = Math.floor(Math.random() * m--);
+
+	// And swap it with the current element.
+	t = array[m];
+	array[m] = array[i];
+	array[i] = t;
+	}
+
+	return array;
+}
+</script>
+</html>
