@@ -9,12 +9,25 @@ body {
 	font-family: Helvetica Neue,Helvetica,Verdana;/*"Lucida Sans Unicode", "Lucida Grande", sans-serif;*/
 	text-align: center;
 	background-color: rgb(45, 87, 0);
+	min-height: 1400px;
 }
-body.dark{
+body.dark {
 	background-color: black;
+}
+body.bigMode {
+	transform: scale(2);
+  margin-top: 700px;
 }
 .hidden {
 	display: none;
+}
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 #maincontainer{
 	margin: 0 auto;
@@ -125,7 +138,7 @@ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYA
 </head>
 <body>
 <div id="maincontainer">
-	<div id="theCard" onclick="zarAt();">?</div>
+	<div id="theCard" class="noselect" onclick="zarAt();">?</div>
 
 	<div id="smalltext">
 		<div class="ruleInfo"><span class="ruleInfoCardName">Ace</span> Choose someone and drink as a partner</div>
@@ -154,6 +167,9 @@ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYA
 	<div class="setting" onclick="changeTheme()">
 		Change Theme
 	</div>
+	<div class="setting" onclick="toggleBigScreen()">
+		Toggle Big Screen Mode
+	</div>
 
 	<div id="credits">
 		A game by <a class="subtlelink" href="http://etekmekketcap.com/" target="_blank">Baris Senkal</a>
@@ -176,10 +192,18 @@ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYA
 <script type="text/javascript">
 function changeTheme(){
 	var current = document.body.className;
-	if(current == "dark") {
-		document.body.className = "";
+	if(current.indexOf('dark')>0) {
+		document.body.className = current.split('dark').join('');
 	} else {
-		document.body.className = "dark";
+		document.body.className += " dark";
+	}
+}
+function toggleBigScreen(){
+	var current = document.body.className;
+	if(current.indexOf('bigMode')>0) {
+		document.body.className = current.split('bigMode').join('');
+	} else {
+		document.body.className += " bigMode";
 	}
 }
 function openSettings(){
@@ -341,22 +365,22 @@ function setType(type){
 	switch(type) {
 	    case 0:
 	        //lesbian threesome (clubs)
-	        document.getElementById("theCard").className = "clubs";
+	        document.getElementById("theCard").className = "noselect clubs";
 	        break;
 	    case 1:
 	        //dimond (diamonds)
-	        document.getElementById("theCard").className = "diamonds";
+	        document.getElementById("theCard").className = "noselect diamonds";
 	        break;
 	    case 2:
 	        //heart (hearts)
-	        document.getElementById("theCard").className = "hearts";
+	        document.getElementById("theCard").className = "noselect hearts";
 	        break;
 	    case 3:
 	        //anal (spades)
-	        document.getElementById("theCard").className = "spades";
+	        document.getElementById("theCard").className = "noselect spades";
 	        break;
 	    default:
-	        document.getElementById("theCard").className = " ";
+	        document.getElementById("theCard").className = "noselect";
 	        break;
 	}
 }
