@@ -418,7 +418,22 @@ var cardTextValuesDefault = {
 	}
 };
 
-var cardTextValues = JSON.parse(JSON.stringify(cardTextValuesDefault)); //copy of it
+var cardTextValues;
+
+function restoreCardText(){
+	if (localStorage && localStorage.cardTextValues && localStorage.cardTextValues.length>0) {
+		cardTextValues = JSON.parse(localStorage.cardTextValues);
+	} else {
+		cardTextValues = JSON.parse(JSON.stringify(cardTextValuesDefault)); //copying
+	}
+}
+restoreCardText();
+
+function saveCardTexts(){
+	if (localStorage) {
+		localStorage.cardTextValues = JSON.stringify(cardTextValues);
+	}
+}
 
 function changeTheme(){
 	var current = body.className;
@@ -453,6 +468,7 @@ function setNewText(num){
 		cardTextValues[num]["text"] = cardTextValuesDefault[num]["text"];
 		el.value = cardTextValuesDefault[num]["text"];
 	}
+	saveCardTexts();
 }
 function resetCards(){
 	cardTextValues = JSON.parse(JSON.stringify(cardTextValuesDefault));
