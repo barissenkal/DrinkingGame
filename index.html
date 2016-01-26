@@ -102,13 +102,13 @@ body.bigMode {
 .dark #SettingsLink {
     color: white;
 }
-#TextChangeLink {
+.TextChangeLink {
     color: #9EB991;
 		margin-top: 40px;
 		font-size: 16px;
 		cursor: pointer;
 }
-.dark #TextChangeLink {
+.dark .TextChangeLink {
     color: white;
 }
 .ruleInfo {
@@ -202,8 +202,12 @@ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYA
 	<div id="smalltext">
 		<span>(Default) Rules</span>
 		<br>
-		<span id="TextChangeLink" onclick="openCardEditor()">
+		<span class="TextChangeLink" onclick="openCardEditor()">
 			Edit Rules
+		</span>
+		<br>
+		<span class="TextChangeLink" onclick="toggleEmojiSigns();zarAt();">
+			Use Emoji Signs
 		</span>
 		<br>
 		<div class="ruleInfo"><span class="ruleInfoCardName">Ace</span> Choose someone and drink as a partner</div>
@@ -228,6 +232,9 @@ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYA
 <div id="settings" class="hidden">
 	<div class="setting" onclick="openGame()">
 		Go back to the game
+	</div>
+	<div class="setting" onclick="toggleEmojiSigns()">
+		Toggle Emoji Signs
 	</div>
 	<div class="setting" onclick="changeTheme()">
 		Change Theme
@@ -313,6 +320,10 @@ background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYA
 	<div class="cardInfoEditRow"> K
 		<textarea id="inputForCard13" rows="2"></textarea>
 		<button type="button" onclick="setNewText(13)">Save</button>
+	</div>
+
+	<div class="setting" onclick="resetCards()">
+		Reset Cards
 	</div>
 
 </div>
@@ -420,7 +431,7 @@ var cardTextValuesDefault = {
 	},
 	9:{
 		sign:"9",
-		text:"true false guessing"
+		text:"True false guessing"
 	},
 	10:{
 		sign:"10",
@@ -437,6 +448,48 @@ var cardTextValuesDefault = {
 	13:{
 		sign:"K",
 		text:"Earned 1 pass"
+	}
+};
+
+var cardSignsEmoji = {
+	1:{
+		sign:"💍"
+	},
+	2:{
+		sign:"☝️"
+	},
+	3:{
+		sign:"👇"
+	},
+	4:{
+		sign:"👫"
+	},
+	5:{
+		sign:"👬"
+	},
+	6:{
+		sign:"👫"
+	},
+	7:{
+		sign:"😏"
+	},
+	8:{
+		sign:"✋"
+	},
+	9:{
+		sign:"😶"
+	},
+	10:{
+		sign:"🍻"
+	},
+	11:{
+		sign:"🐑"
+	},
+	12:{
+		sign:"👑"
+	},
+	13:{
+		sign:"🙏"
 	}
 };
 
@@ -491,9 +544,42 @@ function setNewText(num){
 		el.value = cardTextValuesDefault[num]["text"];
 	}
 	saveCardTexts();
+
+	//Updating current card
+	if(left != 0) setCard(thedeck[left]);
 }
 function resetCards(){
-	cardTextValues = JSON.parse(JSON.stringify(cardTextValuesDefault));
+	var temp = JSON.parse(JSON.stringify(cardTextValuesDefault));
+	for(var x in temp){
+		cardTextValues[x].text = temp[x].text;
+	}
+	updateCardEditor();
+	delete localStorage["cardTextValues"];
+}
+var useEmoji = false;
+function useEmojiSigns(){
+	useEmoji = true;
+	for(var x in cardTextValues){
+		cardTextValues[x].sign = cardSignsEmoji[x].sign;
+	}
+}
+function useTextSigns(){
+	useEmoji = false;
+	for(var x in cardTextValues){
+		cardTextValues[x].sign = cardTextValuesDefault[x].sign;
+	}
+}
+function toggleEmojiSigns(){
+	if(useEmoji){
+		useTextSigns();
+	} else {
+		useEmojiSigns();
+	}
+
+	//updating current card
+	if(left != 0) setCard(thedeck[left]);
+
+	openGame();
 }
 
 function openSettings(){
