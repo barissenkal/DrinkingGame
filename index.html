@@ -2,6 +2,7 @@
 <!-- v3.2 -->
 <html>
 <head>
+<meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Card Game</title>
 <link rel="apple-touch-icon" sizes="57x57" href="./icons/apple-touch-icon-57x57.png">
@@ -28,7 +29,7 @@
 <meta name="theme-color" content="#0d5c00">
 <style type="text/css">
 body {
-	font-family: Helvetica Neue,Helvetica,Verdana;/*"Lucida Sans Unicode", "Lucida Grande", sans-serif;*/
+	font-family: Helvetica,Verdana;/*"Lucida Sans Unicode", "Lucida Grande", sans-serif;*/
 	text-align: center;
 	background-color: rgb(45, 87, 0);
 	min-height: 1400px;
@@ -83,6 +84,9 @@ body.bigMode {
 	background-color: rgb(40,40,40);
 	box-shadow: 1px 2px rgba(18, 18, 18, 0.2);
 	color: #B5B5B5;
+}
+.emoji #theCard {
+	font-family: 'AppleColorEmoji';
 }
 #zarbutton {
 	font-size:32px;
@@ -559,12 +563,14 @@ function resetCards(){
 var useEmoji = false;
 function useEmojiSigns(){
 	useEmoji = true;
+	body.className += " emoji";
 	for(var x in cardTextValues){
 		cardTextValues[x].sign = cardSignsEmoji[x].sign;
 	}
 }
 function useTextSigns(){
 	useEmoji = false;
+	body.className = body.className.split('emoji').join('');
 	for(var x in cardTextValues){
 		cardTextValues[x].sign = cardTextValuesDefault[x].sign;
 	}
