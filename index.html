@@ -78,16 +78,13 @@
 
 		cursor: pointer;
 
-		/*position: relative;
-		top: 50%;
-		-webkit-transform: translateY(-50%);
-		-ms-transform: translateY(-50%);
-		transform: translateY(-50%);*/
-
 		-webkit-animation-duration: 400ms;
 		animation-duration: 400ms;
 		-webkit-animation-fill-mode: both;
 		animation-fill-mode: both;
+
+		z-index: 10;
+		position: relative;
 	}
 	.dark #theCard {
 		background-color: rgb(40,40,40);
@@ -106,6 +103,9 @@
 		color: #fdfdfd;
 		margin-top: 20px;
 		font-size: 20px;
+
+		z-index: 1;
+		position: relative;
 	}
 	#SettingsLink {
 		color: #49751F;
