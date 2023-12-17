@@ -837,7 +837,8 @@ function shuffle(array) {
 }
 
 if ('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('service-worker.js');
+  // Github pages path for hosting
+	navigator.serviceWorker.register('service-worker.js', { scope: "/DrinkingGame/" });
 }
 </script>
 </html>
